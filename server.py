@@ -1,4 +1,5 @@
 from data.__all_models import *
+import os
 
 app = Flask(__name__)
 api = Api(app)
@@ -909,15 +910,9 @@ def main():
     api.add_resource(Results_CatListResource, '/api/v2/results_cat')
     api.add_resource(Results_ChinchillaListResource, '/api/v2/results_chinchilla')
 
-    app.run(port=8080)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
 
 
 if __name__ == '__main__':
-    db_session.global_init("db/tests.db")
-    api.add_resource(ResultsResource, '/api/v2/results')
-    api.add_resource(Results_DogListResource, '/api/v2/results_dog')
-    api.add_resource(Results_DrinkListResource, '/api/v2/results_drink')
-    api.add_resource(Results_CatListResource, '/api/v2/results_cat')
-    api.add_resource(Results_ChinchillaListResource, '/api/v2/results_chinchilla')
-
-    app.run(port=8080)
+    main()
